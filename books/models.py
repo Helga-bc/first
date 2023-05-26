@@ -9,3 +9,6 @@ class Book(models.Model):
         return f"Книга:{self.id} Название: {self.title} Автор: {self.author} Год: {self.year} "
 
 
+class Genre(models.Model):
+    title = models.CharField(max_length=50)
+
