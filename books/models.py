@@ -44,6 +44,10 @@ class Genre(models.Model):
     def __str__(self):
         return f"Жанр {self.id}: {self.title}"
 
+    class Meta:
+        verbose_name = "Жанр"
+        verbose_name_plural = "Жанры"
+
 
 class Movie(models.Model):
     movie_name = models.CharField(max_length=50)

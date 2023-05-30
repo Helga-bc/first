@@ -15,6 +15,15 @@
         <p>{{books.author}}</p>
     {%endfor%}
 
+    <h1>Жанры</h1>
+    {% for genre in genres %}
+    <p> {{genre.title}}</p>
+    {% endfor %}
+
+    <h1>Издательство</h1>
+    {% for publisher in publishers %}
+    <p> {{publisher.title}}</p>
+    {% endfor %}
 
 
 </body>
