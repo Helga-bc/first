@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import first, second_func, third_func
-from books.views import books
+from books.views import books, get_book, get_genre_books
 from posts.views import posts
 
 urlpatterns = [
@@ -25,7 +25,8 @@ urlpatterns = [
     path('second/', second_func),
     path('third/', third_func),
     path('get_books/', books, name="books"),
-    path('get_posts/', posts)
+    path('get_posts/', posts),
 
-
+    path('get_books/<int:id>/', get_book, name="get_book"),
+    path('get_genre/<str:title>', get_genre_books, name="get_genre")
 ]

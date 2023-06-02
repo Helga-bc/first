@@ -10,20 +10,18 @@
 
     </h1>
 
-    {% for books in books %}
-        <p>{{books.title}}</p>
-        <p>{{books.author}}</p>
+    {% for book in books %}
+    <p>
+        Назввание: <a href="{% url 'get_book' book.id %}">
+            {{book.title}}
+        </a>
+    </p>
+    <p>Автор: {{book.author}}</p>
+    <p>Жанр: {{book.genre.title}}</p>
+    <br>
+
     {%endfor%}
 
-    <h1>Жанры</h1>
-    {% for genre in genres %}
-    <p> {{genre.title}}</p>
-    {% endfor %}
-
-    <h1>Издательство</h1>
-    {% for publisher in publishers %}
-    <p> {{publisher.title}}</p>
-    {% endfor %}
 
 
 </body>
