@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from .views import first, second_func, third_func
 from books.views import books, get_book, get_genre_books
-from posts.views import posts
+from posts.views import posts, get_post, get_tag_post
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,8 +25,11 @@ urlpatterns = [
     path('second/', second_func),
     path('third/', third_func),
     path('get_books/', books, name="books"),
-    path('get_posts/', posts),
-
     path('get_books/<int:id>/', get_book, name="get_book"),
-    path('get_genre/<str:title>', get_genre_books, name="get_genre")
+    path('get_genre/<str:title>/', get_genre_books, name="get_genre"),
+
+    path('get_posts/', posts),
+    path('get_posts/<int:id>/', get_post, name="get_post"),
+    path('get_posts/<str:title>/', get_tag_post, name="get_tag")
+
 ]

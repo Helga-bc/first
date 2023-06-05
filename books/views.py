@@ -34,3 +34,4 @@ def get_genre_books(request, title):
         return HttpResponse(f"<h1>Жанра с таким названием не существует! </h1>")
 
     return render(request, "genre.html", context={"genre": genre})
+
