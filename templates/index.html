@@ -18,11 +18,12 @@
     </p>
     <p>Автор: {{book.author}}</p>
     <p>Жанр: {{book.genre.title}}</p>
+
     <br>
 
     {%endfor%}
 
-
+<h3><a href="{% url 'add_book' %}"> Добавить книгу</a></h3>
 
 </body>
 </html>

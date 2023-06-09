@@ -23,13 +23,13 @@ class Publisher(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=50)
     author = models.CharField(max_length=50)
-    year = models.IntegerField(blank=True)
-    raiting = models.IntegerField(default=0)
+    year = models.IntegerField()
+    raiting = models.IntegerField(default=0, null=True, blank=True)
 
     genre = models.ForeignKey("Genre", on_delete=models.DO_NOTHING, null=True, blank=True, related_name='books')
     tags = models.ManyToManyField("Tag", related_name="books")
 
-    publisher = models.OneToOneField("Publisher", on_delete=models.DO_NOTHING, default=None)
+    publisher = models.OneToOneField("Publisher", on_delete=models.DO_NOTHING, default=None, null=True, blank=True)
 
     def __str__(self):
         return f"Книга:{self.id} Название: {self.title} Автор: {self.author}"

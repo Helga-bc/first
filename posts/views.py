@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Post, PostTag
+from .forms import PostTagForm
 
 
 def posts(request):
@@ -26,4 +27,14 @@ def get_tag_post(request, title):
 
     return render(request, "tag_info.html", context={"tag": tag,
                                                      "title": title})
+
+
+def add_post_tag(request):
+    form = PostTagForm()
+    return render(request, "add_PostTag.html", context={"form": form})
+
+
+def create_post_tag(request):
+    PostTag.objects.create(title=request.POST['title'])
+    return HttpResponse("<h2>Сохранено!</h2>")
 

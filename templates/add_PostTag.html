@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить новый тэг</title>
+</head>
+<body>
+    <h3>Страница с добавлением нового тэга</h3>
+    <form action="{% url 'create_post_tag' %}" method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <p>{{field.label_tag}} {{field}}</p>
+        {%endfor%}
+
+        <input type="submit" value="OK">
+    </form>
+</body>
+</html>

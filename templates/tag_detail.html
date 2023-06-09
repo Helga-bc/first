@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{tag.title}}</title>
+</head>
+<body>
+    <h1>Тэг: {{tag.title}}</h1>
+
+    <h3>Все книги с таким тэгом:</h3>
+    {% for book in tag_books %}
+    <p> - {{book}}</p>
+    {%endfor%}
+
+
+</body>
+</html>
