@@ -27,7 +27,7 @@ class Book(models.Model):
     raiting = models.IntegerField(default=0, null=True, blank=True)
 
     genre = models.ForeignKey("Genre", on_delete=models.DO_NOTHING, null=True, blank=True, related_name='books')
-    tags = models.ManyToManyField("Tag", related_name="books")
+    tags = models.ManyToManyField("Tag", related_name="books", blank=True)
 
     publisher = models.OneToOneField("Publisher", on_delete=models.DO_NOTHING, default=None, null=True, blank=True)
 

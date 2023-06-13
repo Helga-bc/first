@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Post, PostTag
-from .forms import PostTagForm
+from .forms import PostForm, PostTagForm
 
 
 def posts(request):
@@ -37,4 +37,25 @@ def add_post_tag(request):
 def create_post_tag(request):
     PostTag.objects.create(title=request.POST['title'])
     return HttpResponse("<h2>Сохранено!</h2>")
+
+
+def add_post(request):
+    if request.method == "GET":
+        form = PostForm()
+        return render(request, "add_post.html", context={"form": form})
+    elif request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            return HttpResponse("<h1>Что то пошло не так!</h1>")
+
+    return HttpResponse("<h2>Пост добавлен !</h2>")
+
+
+
+def search_post(request):
+    search_query = request.GET['search']
+    posts = Post.objects.filter(title__contains=search_query)
+    return render(request, "search_post.html", context={"posts": posts})
 

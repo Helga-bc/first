@@ -5,6 +5,12 @@
     <title>Книги</title>
 </head>
 <body>
+        <form action="{% url 'search_book' %}" method="get">
+        {% csrf_token %}
+            <input placeholder="Введите назание книги" type="text", name="search">
+            <input type="submit" value="OK">
+    </form>
+
     <h1>
         Список книг
 
@@ -18,6 +24,9 @@
     </p>
     <p>Автор: {{book.author}}</p>
     <p>Жанр: {{book.genre.title}}</p>
+        <p>Год: {{book.year}}</p>
+
+
 
     <br>
 

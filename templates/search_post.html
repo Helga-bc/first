@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск постов </title>
+</head>
+<body>
+
+    {% for post in posts %}
+    <p>
+        Назввание: <a href="{% url 'get_post' post.id %}">
+            {{post.title}}
+        </a>
+    </p>
+    <p>Описание: {{post.description}}</p>
+    <p>Категория: {{post.get_category_display}}</p>
+    <p>Дата создания: {{post.date_create}}</p>
+
+    <br>
+
+    {%endfor%}
+
+</body>
+</html>

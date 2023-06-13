@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск книг</title>
+
+</head>
+<body>
+
+
+    {% for book in books %}
+    <p>
+        Назввание: <a href="{% url 'get_book' book.id %}">
+            {{book.title}}
+        </a>
+    </p>
+    <p>Автор: {{book.author}}</p>
+    <p>Жанр: {{book.genre.title}}</p>
+
+    <br>
+
+    {%endfor%}
+
+
+
+</body>
+</html>

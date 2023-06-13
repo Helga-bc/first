@@ -5,6 +5,16 @@
     <title>Посты</title>
 </head>
 <body>
+
+
+        <form action="{% url 'search_post' %}" method="get">
+        {% csrf_token %}
+            <input placeholder="Введите назание поста" type="text", name="search">
+            <input type="submit" value="OK">
+        </form>
+
+        <h2><a href="{% url 'add_post' %}"> Добавить новый пост</a></h2>
+
     <h1>
         Список постов:
 
