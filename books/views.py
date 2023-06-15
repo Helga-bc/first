@@ -106,6 +106,28 @@ def add_book(request):
 
 
 def search_book(request):
-    search_query = request.GET['search']
-    books = Book.objects.filter(title__contains=search_query)
+    title = request.GET["title"]
+    genre = request.GET["genre"]
+
+    books = Book.objects.all()
+
+    if title != '':
+        books = books.filter(title__contains=title)
+    if genre != '':
+        books = books.filter(genre__title__contains=genre)
+
+    # books = Book.objects.filter(title__contains=search_query)
+
     return render(request, "search_book.html", context={"books": books})
+
+
+def delete_book(request, id):
+    try:
+        book = Book.objects.get(id=id)
+    except Book.DoesNotExist:
+        return HttpResponse(f"<h1>Книги с  id {id} не существует</h1>")
+    book.delete()
+    return redirect('books')
+
+
+

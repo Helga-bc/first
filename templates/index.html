@@ -7,9 +7,13 @@
 <body>
         <form action="{% url 'search_book' %}" method="get">
         {% csrf_token %}
-            <input placeholder="Введите назание книги" type="text", name="search">
+            <input placeholder="Введите назание книги" type="text", name="title">
+            <input placeholder="Введите жанр книги"  type="text", name="genre">
+
             <input type="submit" value="OK">
     </form>
+
+
 
     <h1>
         Список книг

@@ -31,6 +31,9 @@ class Book(models.Model):
 
     publisher = models.OneToOneField("Publisher", on_delete=models.DO_NOTHING, default=None, null=True, blank=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
     def __str__(self):
         return f"Книга:{self.id} Название: {self.title} Автор: {self.author}"
 

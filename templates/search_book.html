@@ -6,7 +6,9 @@
 
 </head>
 <body>
+<h2> Поиск книг </h2>
 
+    {% if books %}
 
     {% for book in books %}
     <p>
@@ -20,6 +22,11 @@
     <br>
 
     {%endfor%}
+    {%else%}
+        <h3>Книг с такими фильтрами нет!</h3>
+
+    {%endif%}
+
 
 
 

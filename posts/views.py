@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Post, PostTag
 from .forms import PostForm, PostTagForm
@@ -53,9 +53,16 @@ def add_post(request):
     return HttpResponse("<h2>Пост добавлен !</h2>")
 
 
-
 def search_post(request):
     search_query = request.GET['search']
     posts = Post.objects.filter(title__contains=search_query)
     return render(request, "search_post.html", context={"posts": posts})
 
+
+def delete_post(request, id):
+    try:
+        post = Post.objects.get(id=id)
+    except Post.DoesNotExist:
+        return HttpResponse(f"<h1> Поста с id {id} не существует</h1>")
+    post.delete()
+    return redirect('posts')
