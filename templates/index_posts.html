@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Посты</title>
+    <title>Поиск</title>
 </head>
 <body>
 
 
         <form action="{% url 'search_post' %}" method="get">
         {% csrf_token %}
-            <input placeholder="Введите назание поста" type="text", name="search">
+            <input placeholder="Введите назание поста" type="text", name="title">
+            <input placeholder="Введите назание категории" type="text", name="category">
             <input type="submit" value="OK">
         </form>
 
@@ -45,3 +46,4 @@
 
 </body>
 </html>
+

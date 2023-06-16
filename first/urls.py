@@ -33,16 +33,14 @@ urlpatterns = [
     path('get_posts/', posts),
     path('get_posts/<int:id>/', get_post, name="get_post"),
     path('get_posts/<str:title>/', get_tag_post, name="get_tag"),
+    path('add_PostTag/', add_post_tag, name="add_post_tag"),
+    path('create_PostTag/', create_post_tag, name="create_post_tag"),
 
-    path('add_PostTag', add_post_tag, name="add_post_tag"),
-    path('create_PostTag', create_post_tag, name="create_post_tag"),
-
-    path('search_post', search_post, name="search_post"),
-    path('add_post', add_post, name="add_post"),
+    path('add_post/', add_post, name="add_post"),
+    path('search_post/', search_post, name="search_post"),
     path('delete_post/<int:id>/', delete_post, name="delete_post"),
 
     path('add_book/', add_book, name="add_book"),
-    # path('create_book/', create_book, name="create_book")
     path('search_book/', search_book, name="search_book"),
     path('delete_book/<int:id>/', delete_book, name="delete_book")
 

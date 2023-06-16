@@ -54,14 +54,24 @@ def add_post(request):
 
 
 def search_post(request):
-    search_query = request.GET['search']
-    posts = Post.objects.filter(title__contains=search_query)
+    title = request.GET['title']
+    category = request.GET["category"]
+
+    posts = Post.objects.all()
+
+    if title != '':
+        posts = posts.filter(title__contains=title)
+    if category != '':
+        posts = posts.filter(category__title__contains=category)
+
     return render(request, "search_post.html", context={"posts": posts})
+
 
 
 def delete_post(request, id):
     try:
         post = Post.objects.get(id=id)
+
     except Post.DoesNotExist:
         return HttpResponse(f"<h1> Поста с id {id} не существует</h1>")
     post.delete()

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, PostTag
+from .models import Post, PostTag, PostCategory
 
 
 class PostForm(forms.ModelForm):
@@ -21,6 +21,12 @@ class PostForm(forms.ModelForm):
 class PostTagForm(forms.ModelForm):
     class Meta:
         model = PostTag
+        fields = ["title"]
+
+
+class PostCategoryForm(forms.ModelForm):
+    class Meta:
+        model = PostCategory
         fields = ["title"]
 
 

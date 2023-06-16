@@ -2,18 +2,16 @@ from django.db import models
 
 
 class Post(models.Model):
-    CATEGORY = (
-        ("h", "Health"),
-        ("f", "Fashion"),
-        ("l", "Lifestyle")
-    )
 
     title = models.CharField(max_length=100, blank=False)
     description = models.TextField(default=None, blank=True)
     tags = models.ManyToManyField("PostTag", related_name="posts")
-    category = models.CharField(max_length=5, choices=CATEGORY, default="l", blank=True)
-
     date_create = models.DateField(null=True, blank=True, default=None)
+
+    category = models.ForeignKey("PostCategory", on_delete=models.SET_NULL,
+                                 null=True, blank=True, related_name='post_category'
+                                 )
+
 
     def __str__(self):
         return f"{self.id}. Пост: {self.title}, {self.description}" \
@@ -22,6 +20,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Пост"
         verbose_name_plural = "Посты"
+
 
 class PostTag(models.Model):
     title = models.CharField(max_length=50)
@@ -34,5 +33,14 @@ class PostTag(models.Model):
         verbose_name_plural = "Тэги"
 
 
-# class PostCategory(models.Model):
-#     title = models.CharField(max_length=50)
+class PostCategory(models.Model):
+
+    title = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.id}. Категория: {self.title}"
+
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+

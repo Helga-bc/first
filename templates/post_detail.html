@@ -8,8 +8,8 @@
 
 <h1>{{post.title}}</h1>
 
-<p>{% if post.category %}</p>
-Категория: {{post.get_category_display}}
+<p>{% if post.category.title %}</p>
+Категория: {{post.category.title}}
 {% else %}
 <p> Категория: отсутствует</p>
 {%endif%}
@@ -36,3 +36,6 @@
 
 </body>
 </html>
+
+
+

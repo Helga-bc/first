@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Post, PostTag
+from .models import Post, PostTag, PostCategory
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "description", "category", "get_tags")
+    list_display = ("id", "title", "description", "category", "get_tags", "date_create")
 
     def get_tags(self, obj):
         tags = obj.tags.all()
@@ -12,3 +12,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(PostTag)
+admin.site.register(PostCategory)
