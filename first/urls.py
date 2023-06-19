@@ -19,6 +19,13 @@ from .views import first, second_func, third_func
 from books.views import books, get_book, get_genre_books, get_tag_books, add_book, search_book, delete_book
 from posts.views import posts, get_post, get_tag_post, add_post_tag, create_post_tag, search_post, add_post, delete_post
 
+from users.views import register_user
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', first),
@@ -30,7 +37,7 @@ urlpatterns = [
     path('get_tag/<str:title>/', get_tag_books, name="get_tag_books"),
 
 
-    path('get_posts/', posts),
+    path('get_posts/', posts, name="posts"),
     path('get_posts/<int:id>/', get_post, name="get_post"),
     path('get_posts/<str:title>/', get_tag_post, name="get_tag"),
     path('add_PostTag/', add_post_tag, name="add_post_tag"),
@@ -42,6 +49,10 @@ urlpatterns = [
 
     path('add_book/', add_book, name="add_book"),
     path('search_book/', search_book, name="search_book"),
-    path('delete_book/<int:id>/', delete_book, name="delete_book")
+    path('delete_book/<int:id>/', delete_book, name="delete_book"),
+    path('registration/', register_user, name="register")
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Post, PostTag
-from .forms import PostForm, PostTagForm
+from .forms import PostForm, PostTagForm, PostCategory, PostCategoryForm
 
 
 def posts(request):
@@ -44,14 +44,46 @@ def add_post(request):
         form = PostForm()
         return render(request, "add_post.html", context={"form": form})
     elif request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            return HttpResponse("<h1>Что то пошло не так!</h1>")
+        category_id = request.POST['category']
 
-    return HttpResponse("<h2>Пост добавлен !</h2>")
 
+        category = None
+        image = None
+
+        if category != '':
+            category = PostCategory.objects.get(id=category_id)
+
+        if request.FILES['image'] != '':
+            image = request.FILES['image']
+
+        post = Post.objects.create(title=request.POST['title'],
+                                   description=request.POST['description'],
+                                   category=category,
+                                   image=image)
+        tags = request.POST.getlist('tags')
+        post.tags.set(tags)
+        post.save()
+
+        return redirect("posts")
+
+
+
+
+
+    #
+    # # переписсать функцию, эта не добавляет картинку
+    # if request.method == "GET":
+    #     form = PostForm()
+    #     return render(request, "add_post.html", context={"form": form})
+    # elif request.method == "POST":
+    #     form = PostForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     else:
+    #         return HttpResponse("<h1>Что то пошло не так!</h1>")
+    #
+    # return HttpResponse("<h2>Пост добавлен !</h2>")
+    #
 
 def search_post(request):
     title = request.GET['title']

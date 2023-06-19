@@ -52,13 +52,47 @@ def add_book(request):
         form = BookForm()
         return render(request, "add_book.html", context={"form": form})
     elif request.method == "POST":
-        form = BookForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            return HttpResponse("<h1>Что то пошло не так!</h1>")
+        publisher_id = request.POST['publisher']
+        genre_id = request.POST['genre']
 
-    return redirect("books")
+        publisher = None
+        genre = None
+        image = None
+
+        if publisher_id != '':
+            publisher = Publisher.objects.get(id=publisher_id)
+
+        if genre_id != '':
+            genre = Genre.objects.get(id=genre_id)
+
+        if request.FILES['image'] != '':
+            image = request.FILES['image']
+
+        book = Book.objects.create(title=request.POST['title'],
+                            author=request.POST['author'],
+                            year=request.POST['year'],
+                            raiting=request.POST['raiting'],
+                            publisher=publisher,
+                            genre=genre,
+                            image=image)
+        tags = request.POST.getlist('tags')
+        book.tags.set(tags)
+        book.save()
+
+        return redirect("books")
+
+
+    # if request.method == "GET":
+    #     form = BookForm()
+    #     return render(request, "add_book.html", context={"form": form})
+    # elif request.method == "POST":
+    #     form = BookForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     else:
+    #         return HttpResponse("<h1>Что то пошло не так!</h1>")
+    #
+    # return redirect("books")
 
 
         # publisher_id = request.POST["publisher"]
@@ -84,10 +118,6 @@ def add_book(request):
         # book.save()
         # form = BookForm()
         # return render(request, "add_book.html", context={"form": form})
-
-
-
-
 
 
 
@@ -128,6 +158,8 @@ def delete_book(request, id):
         return HttpResponse(f"<h1>Книги с  id {id} не существует</h1>")
     book.delete()
     return redirect('books')
+
+
 
 
 

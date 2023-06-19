@@ -6,6 +6,11 @@
 </head>
 <body>
 
+{% if post.image %}
+<img style="width: 100px; height: 100px" src="{{ post.image.url }}">
+{% endif %}
+
+
 <h1>{{post.title}}</h1>
 
 <p>{% if post.category.title %}</p>
@@ -32,7 +37,7 @@
 
 <br>
 <hr>
-<a href= 'delete_post posts.id' > Удалить пост </a>
+<a href= '{%  url "delete_post" post.id %}' > Удалить пост </a>
 
 </body>
 </html>

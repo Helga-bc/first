@@ -12,6 +12,8 @@ class Post(models.Model):
                                  null=True, blank=True, related_name='post_category'
                                  )
 
+    image = models.ImageField(null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.id}. Пост: {self.title}, {self.description}" \
