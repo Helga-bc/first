@@ -12,7 +12,7 @@ class Post(models.Model):
                                  null=True, blank=True, related_name='post_category'
                                  )
 
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(default='no_image.png')
 
 
     def __str__(self):

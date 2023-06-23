@@ -48,13 +48,10 @@ def add_post(request):
 
 
         category = None
-        image = None
+        image = request.FILES.get('image', 'no_image.png')
 
-        if category != '':
+        if category_id != '':
             category = PostCategory.objects.get(id=category_id)
-
-        if request.FILES['image'] != '':
-            image = request.FILES['image']
 
         post = Post.objects.create(title=request.POST['title'],
                                    description=request.POST['description'],
@@ -108,3 +105,37 @@ def delete_post(request, id):
         return HttpResponse(f"<h1> Поста с id {id} не существует</h1>")
     post.delete()
     return redirect('posts')
+
+
+def update_post(request, id):
+    try:
+        post = Post.objects.get(id=id)
+
+    except Post.DoesNotExist:
+        return HttpResponse(f"<h1> Поста с id {id} не существует</h1>")
+
+    if request.method == 'GET':
+        form = PostForm(instance=post)
+        return render(request, "update_post.html", context={"form": form,
+                                                            "post": post})
+    else:
+        category_id = request.POST['category']
+
+        category = None
+        image = request.FILES.get('image', 'no_image.png')
+
+        if category != '':
+            category = PostCategory.objects.get(id=category_id)
+
+        post.title = request.POST['title']
+        post.description = request.POST['description']
+        post.category = category
+        post.image = image
+        tags = request.POST.getlist('tags')
+        post.tags.set(tags)
+        post.save()
+        return redirect("get_post", id=post.id)
+
+
+
+

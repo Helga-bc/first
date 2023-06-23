@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновление поста</title>
+</head>
+<body>
+
+<h3> Обновление поста </h3>
+<p>{{post.title}}</p>
+
+    <form action="{% url 'update_post_by_id' post.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <p>{{field.label_tag}} {{field}}</p>
+        {%endfor%}
+
+        <input type="submit" value="OK">
+    </form>
+
+</body>
+</html>
