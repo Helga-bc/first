@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Поиск</title>
+    <title>Посты</title>
 </head>
 <body>
 
@@ -14,8 +14,22 @@
             <input type="submit" value="OK">
         </form>
 
-        <h2><a href="{% url 'add_post' %}"> Добавить новый пост</a></h2>
 
+        {% if request.user.is_authenticated %}
+        <h3> Вы успешно вошли как {{request.user.username}}</h3>
+
+        <h2><a href="{% url 'logout' %}" > Выход</a> </h2>
+
+        {% else %}
+
+        <h2><a href="{% url 'register' %}" > Регистрация</a> </h2>
+        <h2><a href="{% url 'login' %}" > Вход </a> </h2>
+
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+        <h2><a href="{% url 'add_post' %}"> Добавить новый пост</a></h2>
+        {%endif%}
     <h1>
         Список постов:
 
@@ -40,8 +54,9 @@
     </a></p>
     {%endfor%}
 
+{% if request.user.is_authenticated %}
 <h2><a href="{% url 'add_post_tag' %}"> Добавить тэг</a></h2>
-
+{%endif%}
 
 
 </body>

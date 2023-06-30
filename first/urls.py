@@ -23,7 +23,7 @@ from books.views import books, get_book, get_genre_books, get_tag_books,\
 from posts.views import posts, get_post, get_tag_post, add_post_tag, \
     create_post_tag, search_post, add_post, delete_post, update_post
 
-from users.views import register_user
+from users.views import register_user, login_user, logout_user
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -60,7 +60,11 @@ urlpatterns = [
     path('search_book/', search_book, name="search_book"),
     path('delete_book/<int:id>/', delete_book, name="delete_book"),
 
-    path('registration/', register_user, name="register")
+    path('registration/', register_user, name="register"),
+    path('login/', login_user, name='login'),
+    path('logout/', logout_user, name='logout')
+
+
 
 ]
 

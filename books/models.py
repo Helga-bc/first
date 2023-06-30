@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Tag(models.Model):
@@ -35,6 +36,11 @@ class Book(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     image = models.ImageField(default='no_image.png')
+
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING,
+                             null=True,
+                             blank=True,
+                             related_name='books')
 
     def __str__(self):
         return f"Книга:{self.id} Название: {self.title} Автор: {self.author}"

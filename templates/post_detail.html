@@ -11,7 +11,7 @@
 {% endif %}
 
 
-<h1>{{post.title}}</h1>
+<h2>{{post.title}}</h2>
 
 <p>{% if post.category.title %}</p>
 Категория: {{post.category.title}}
@@ -35,14 +35,20 @@
     {%endfor%}
 </p>
 
+
 <br>
 <hr>
+<p>Добавил на сайт {{post.user.username}}</p>
+
+{% if request.user.username == post.user.username %}
 <a href="{% url 'update_post_by_id' post.id %}" > Редактировать пост </a>
 <br>
 <br>
 <a href= '{%  url "delete_post" post.id %}' > Удалить пост </a>
+{%endif%}
 
-
+<br>
+<hr>
 
 
 </body>

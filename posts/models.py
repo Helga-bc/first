@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 
 class Post(models.Model):
@@ -13,6 +15,11 @@ class Post(models.Model):
                                  )
 
     image = models.ImageField(default='no_image.png')
+
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING,
+                             null=True,
+                             blank=True,
+                             related_name='posts')
 
 
     def __str__(self):

@@ -40,28 +40,32 @@ def create_post_tag(request):
 
 
 def add_post(request):
-    if request.method == "GET":
-        form = PostForm()
-        return render(request, "add_post.html", context={"form": form})
-    elif request.method == "POST":
-        category_id = request.POST['category']
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            form = PostForm()
+            return render(request, "add_post.html", context={"form": form})
 
+        elif request.method == "POST":
+            category_id = request.POST['category']
 
-        category = None
-        image = request.FILES.get('image', 'no_image.png')
+            category = None
+            image = request.FILES.get('image', 'no_image.png')
 
-        if category_id != '':
-            category = PostCategory.objects.get(id=category_id)
+            if category_id != '':
+                category = PostCategory.objects.get(id=category_id)
 
-        post = Post.objects.create(title=request.POST['title'],
-                                   description=request.POST['description'],
-                                   category=category,
-                                   image=image)
-        tags = request.POST.getlist('tags')
-        post.tags.set(tags)
-        post.save()
+            post = Post.objects.create(title=request.POST['title'],
+                                       description=request.POST['description'],
+                                       category=category,
+                                       image=image,
+                                       user=request.user)
+            tags = request.POST.getlist('tags')
+            post.tags.set(tags)
+            post.save()
 
-        return redirect("posts")
+            return redirect("posts")
+    else:
+        return HttpResponse("<h1>Только авторизованный пользователь может добавить пост!</h1>")
 
 
 
@@ -103,8 +107,12 @@ def delete_post(request, id):
 
     except Post.DoesNotExist:
         return HttpResponse(f"<h1> Поста с id {id} не существует</h1>")
-    post.delete()
-    return redirect('posts')
+
+    if request.user.username != post.user.username:
+        return HttpResponse("<h1> У вас нет прав на удаление этого поста </h1>")
+    else:
+        post.delete()
+        return redirect('posts')
 
 
 def update_post(request, id):
@@ -114,27 +122,31 @@ def update_post(request, id):
     except Post.DoesNotExist:
         return HttpResponse(f"<h1> Поста с id {id} не существует</h1>")
 
-    if request.method == 'GET':
-        form = PostForm(instance=post)
-        return render(request, "update_post.html", context={"form": form,
-                                                            "post": post})
+    if request.user.username != post.user.username:
+        return HttpResponse("<h1> У вас нет прав на обновление этого поста! </h1>")
+
     else:
-        category_id = request.POST['category']
+        if request.method == 'GET':
+            form = PostForm(instance=post)
+            return render(request, "update_post.html", context={"form": form,
+                                                                "post": post})
+        else:
+            category_id = request.POST['category']
 
-        category = None
-        image = request.FILES.get('image', 'no_image.png')
+            category = None
+            image = request.FILES.get('image', 'no_image.png')
 
-        if category != '':
-            category = PostCategory.objects.get(id=category_id)
+            if category != '':
+                category = PostCategory.objects.get(id=category_id)
 
-        post.title = request.POST['title']
-        post.description = request.POST['description']
-        post.category = category
-        post.image = image
-        tags = request.POST.getlist('tags')
-        post.tags.set(tags)
-        post.save()
-        return redirect("get_post", id=post.id)
+            post.title = request.POST['title']
+            post.description = request.POST['description']
+            post.category = category
+            post.image = image
+            tags = request.POST.getlist('tags')
+            post.tags.set(tags)
+            post.save()
+            return redirect("get_post", id=post.id)
 
 
 

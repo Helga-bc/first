@@ -16,7 +16,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = "__all__"
+        fields = ["title", "description", "tags", "date_create", "category", "image"]
 
 class PostTagForm(forms.ModelForm):
     class Meta:
