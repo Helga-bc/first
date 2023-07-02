@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Book, Genre, Publisher, Tag
+from .models import Book, Genre, Publisher, Tag, Comment
 from .forms import BookForm
 from django.http import HttpResponse
 
@@ -209,5 +209,20 @@ def update_book(request, id):
             book.save()
 
             return redirect("get_book", id=book.id)
+
+
+def add_comment(request, id):
+    try:
+        book = Book.objects.get(id=id)
+        raiting = 5
+        Comment.objects.create(content=request.POST['comment'],
+                           raiting=raiting,
+                           user=request.user,
+                           book=book)
+        return redirect("get_book", id=id)
+    except Book.DoesNotExist:
+        return HttpResponse(f"<h1> книги с id {id} нет, вы не можете добавить комментарий! </h1>")
+
+
 
 

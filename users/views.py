@@ -54,5 +54,10 @@ def login_user(request):
 
 
 def logout_user(request):
-    logout(request)
-    return redirect('books')
+
+    if request.environ['HTTP_REFERER'] == 'http://127.0.0.1:8000/get_posts/':
+        logout(request)
+        return redirect('posts')
+    else:
+        logout(request)
+        return redirect('books')

@@ -76,3 +76,21 @@ class Category(models.Model):
 
     def __str__(self):
         return f"{self.id}. {self.category_name}"
+
+
+class Comment(models.Model):
+    content = models.CharField(max_length=300)
+    raiting = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING,
+                             related_name='comments')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE,
+                             related_name='comments')
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Комментарий: {self.content}, {self.user.username}"
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
