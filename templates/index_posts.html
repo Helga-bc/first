@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Посты</title>
-</head>
-<body>
+{%extends 'base_post.html'%}
 
+{% block title %}
+    Главная по постам
+{% endblock %}
 
-        <form action="{% url 'search_post' %}" method="get">
-        {% csrf_token %}
-            <input placeholder="Введите назание поста" type="text", name="title">
-            <input placeholder="Введите назание категории" type="text", name="category">
-            <input type="submit" value="OK">
-        </form>
-
+{% block content %}
 
         {% if request.user.is_authenticated %}
         <h3> Вы успешно вошли как {{request.user.username}}</h3>
@@ -58,7 +49,6 @@
 <h2><a href="{% url 'add_post_tag' %}"> Добавить тэг</a></h2>
 {%endif%}
 
+{% endblock %}
 
-</body>
-</html>
 

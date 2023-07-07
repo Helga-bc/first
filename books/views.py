@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Book, Genre, Publisher, Tag, Comment
 from .forms import BookForm
 from django.http import HttpResponse
+from django.utils.datastructures import MultiValueDictKeyError
 
 
 def books(request):
@@ -212,17 +213,22 @@ def update_book(request, id):
 
 
 def add_comment(request, id):
-    try:
-        book = Book.objects.get(id=id)
-        raiting = 5
-        Comment.objects.create(content=request.POST['comment'],
-                           raiting=raiting,
-                           user=request.user,
-                           book=book)
-        return redirect("get_book", id=id)
-    except Book.DoesNotExist:
-        return HttpResponse(f"<h1> книги с id {id} нет, вы не можете добавить комментарий! </h1>")
+    if request.user.is_authenticated:
+        try:
+            book = Book.objects.get(id=id)
+            raiting = 5
+            try:
+                Comment.objects.create(content=request.POST['comment'],
+                                       raiting=raiting,
+                                       user=request.user,
+                                       book=book)
+            except MultiValueDictKeyError:
+                return HttpResponse("<h1> 404 </h1>")
 
-
+            return redirect("get_book", id=id)
+        except Book.DoesNotExist:
+            return HttpResponse(f"<h1> книги с id {id} нет, вы не можете добавить комментарий! </h1>")
+    else:
+        return HttpResponse("<h1> Вы не авторизованы в системе! </h1>")
 
 

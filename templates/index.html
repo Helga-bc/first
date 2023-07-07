@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Книги</title>
-</head>
-<body>
-        <form action="{% url 'search_book' %}" method="get">
-        {% csrf_token %}
-            <input placeholder="Введите назание книги" type="text", name="title">
-            <input placeholder="Введите жанр книги"  type="text", name="genre">
+{%extends 'base.html'%}
 
-            <input type="submit" value="OK">
-    </form>
+{% block title %}
+    Главная по книгам
+{% endblock %}
+
+{% block content %}
 
         {% if request.user.is_authenticated %}
         <h3> Вы успешно вошли как {{request.user.username}}</h3>
@@ -50,6 +43,4 @@
         {% if request.user.is_authenticated %}
             <h3><a href="{% url 'add_book' %}"> Добавить книгу</a></h3>
         {%endif%}
-
-</body>
-</html>
+{% endblock %}

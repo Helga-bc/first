@@ -127,3 +127,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# config/settings.py
+RECIPIENTS_EMAIL = ['Incognito18@mail.ru']   # замените на свою почту
+DEFAULT_FROM_EMAIL = 'Incognito18@mail.ru'  # замените на свою почту
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp@mail.ru'
+EMAIL_HOST_USER = 'Incognito18@mail.ru'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

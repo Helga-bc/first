@@ -4,6 +4,10 @@ from .forms import UserForm, LoginUserForm
 from django.contrib.auth.models import User
 import django
 from django.contrib.auth import authenticate, login, logout
+from django.core.mail import send_mail, BadHeaderError
+from django.conf import settings
+
+
 
 
 def register_user(request):
@@ -24,6 +28,9 @@ def register_user(request):
                 return HttpResponse("<h1> Пользователь с таким логином уже существует</h1>")
             user.set_password(request.POST['password'])
             user.save()
+            send_mail('Успешная регистрация', 'Вы успешно зарегистрировались',
+                      settings.DEFOULT_FROM_EMAIL,
+                      settings.RECIPIENTS_EMAIL)
             return HttpResponse("<h1>Вы успешно зарегистрировались</h1>")
 
 
@@ -54,10 +61,12 @@ def login_user(request):
 
 
 def logout_user(request):
-
-    if request.environ['HTTP_REFERER'] == 'http://127.0.0.1:8000/get_posts/':
-        logout(request)
-        return redirect('posts')
+    if request.user.is_authenticated:
+        if request.environ['HTTP_REFERER'] == 'http://127.0.0.1:8000/get_books/':
+            logout(request)
+            return redirect('books')
+        else:
+            logout(request)
+            return redirect('posts')
     else:
-        logout(request)
-        return redirect('books')
+        return HttpResponse("<h1> 404 </h1>")

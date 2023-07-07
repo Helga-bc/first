@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{post.id}}. Пост </title>
-</head>
-<body>
+{%extends 'base_post.html'%}
 
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+{% block content %}
 {% if post.image %}
 <img style="width: 100px; height: 100px" src="{{ post.image.url }}">
 {% endif %}
@@ -50,9 +49,6 @@
 <br>
 <hr>
 
-
-</body>
-</html>
-
+{% endblock %}
 
 
