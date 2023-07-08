@@ -5,7 +5,12 @@ from .models import Book, Genre, Movie, Category, Tag, Publisher, Comment
 
 # Register your models here.
 class BookAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "raiting", "year", "publisher", "genre", "get_tags", "created_at", "image", "user")
+    list_display = ("id", "title", "raiting", "year", "publisher",
+                    "genre", "get_tags", "created_at", "image",
+                    "user", "price", "count")
+    # change_list_template =
+    list_display_links = ("title", "id")
+    search_fields = ("title", )
 
     def get_tags(self, obj):
         tags = obj.tags.all()

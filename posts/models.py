@@ -22,6 +22,7 @@ class Post(models.Model):
                              related_name='posts')
 
 
+
     def __str__(self):
         return f"{self.id}. Пост: {self.title}, {self.description}" \
                f", {self.category}, {self.date_create}"

@@ -138,19 +138,29 @@ def add_book(request):
 
 
 def search_book(request):
+
     title = request.GET["title"]
     genre = request.GET["genre"]
+    price_lt = request.GET["price_lt"]
 
     books = Book.objects.all()
+    result_string = "Результат поиска "
 
     if title != '':
+        result_string += f"по названию : {title}  "
         books = books.filter(title__contains=title)
     if genre != '':
+        result_string += f"по жанру : {genre}  "
         books = books.filter(genre__title__contains=genre)
+
+    if price_lt != "":
+        result_string += f"по цене : {price_lt}  "
+        books = books.filter(price__lte=price_lt)
 
     # books = Book.objects.filter(title__contains=search_query)
 
-    return render(request, "search_book.html", context={"books": books})
+    return render(request, "search_book.html", context={"books": books,
+                                                        "result_string":result_string})
 
 
 def delete_book(request, id):
@@ -232,3 +242,17 @@ def add_comment(request, id):
         return HttpResponse("<h1> Вы не авторизованы в системе! </h1>")
 
 
+def buy_book(request, id):
+    try:
+        book = Book.objects.get(id=id)
+        print(book.id)
+    except Book.DoesNotExist:
+        return HttpResponse(f"<h1> книги с id {id} не существует </h1>")
+
+    if book.count != 0:
+        book.count = book.count - 1
+        book.save()
+    else:
+        return HttpResponse("<h1> 404 </h1>")
+
+    return HttpResponse("<h1> страница покупки </h1>")

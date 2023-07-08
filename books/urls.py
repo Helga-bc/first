@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from books.views import books, get_book, get_genre_books, get_tag_books,\
-    add_book, search_book, delete_book, update_book, add_comment
+    add_book, search_book, delete_book, update_book, add_comment, buy_book
 
 urlpatterns = [path('get_books/', books, name="books"),
                path('get_books/<int:id>/', get_book, name="get_book"),
@@ -12,7 +12,8 @@ urlpatterns = [path('get_books/', books, name="books"),
                path('update_book/<int:id>', update_book, name="update_book_by_id"),
                path('search_book/', search_book, name="search_book"),
                path('delete_book/<int:id>/', delete_book, name="delete_book"),
-               path('add_comment/<int:id>/', add_comment, name="add_comment")
+               path('add_comment/<int:id>/', add_comment, name="add_comment"),
+               path('buy_book/<int:id>/', buy_book, name="buy_book")
 
                ]
 

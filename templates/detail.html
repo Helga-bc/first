@@ -36,6 +36,14 @@
 {%endfor%}
 
 <p>Добавил на сайт {{book.user.username}}</p>
+<p>Цена: {{ book.price }}</p>
+
+{% if book.count > 0 %}
+<a href="{% url 'buy_book' book.id %}"> Купить книгу</a>
+{%else%}
+<h3>Книг не осталось на складе</h3>
+{%endif%}
+
 <br>
 <hr>
 
