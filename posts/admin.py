@@ -3,7 +3,10 @@ from .models import Post, PostTag, PostCategory
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "description", "category", "get_tags", "date_create", "image", "user")
+    list_display = ("id", "title", "description", "category",
+                    "get_tags", "date_create", "image", "user",
+                    "likes")
+    list_display_links = ("title", "id")
 
     def get_tags(self, obj):
         tags = obj.tags.all()

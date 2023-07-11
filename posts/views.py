@@ -149,5 +149,21 @@ def update_post(request, id):
             return redirect("get_post", id=post.id)
 
 
+def likes(request, id):
+    if request.user.is_authenticated:
+        try:
+            post = Post.objects.get(id=id)
+            post.likes += 1
+            post.save()
+            print(request.user.username)
+
+            return redirect("get_post", id=post.id)
+
+        except Post.DoesNotExist:
+            return HttpResponse(f"<h1> Поста с id {id} не существует, вы не можете поставить like! </h1>")
+    else:
+        return HttpResponse("<h1> Вы не авторизованы в системе! </h1>")
+
+
 
 

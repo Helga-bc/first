@@ -20,6 +20,7 @@ class Post(models.Model):
                              null=True,
                              blank=True,
                              related_name='posts')
+    likes = models.IntegerField()
 
 
 

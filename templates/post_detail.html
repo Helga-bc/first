@@ -38,6 +38,7 @@
 <br>
 <hr>
 <p>Добавил на сайт {{post.user.username}}</p>
+<hr>
 
 {% if request.user.username == post.user.username %}
 <a href="{% url 'update_post_by_id' post.id %}" > Редактировать пост </a>
@@ -46,6 +47,14 @@
 <a href= '{%  url "delete_post" post.id %}' > Удалить пост </a>
 {%endif%}
 
+<p>Likes: {{post.likes}}</p>
+
+{%if request.user.is_authenticated %}
+    <form action="{% url 'likes' post.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Добавить лайк">
+    </form>
+{% endif %}
 <br>
 <hr>
 
